@@ -9,7 +9,7 @@ const generateToken=(user)=>{
         email,
         premium
     },secret, {
-        expiresIn:'1d'
+        // expiresIn:'50d'
     } ) 
 }
 
