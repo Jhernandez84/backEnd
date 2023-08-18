@@ -17,9 +17,10 @@ const corsOptions={
     origin:process.env.FRONTEND_URL,
     optionsSuccessStatus:200
 }
+
 app.use(cors(corsOptions))
 app.use(express.json())
-app.use('/users',userRoutes)
+app.use('/users',userRoutes) //indica que cuando se escribe Users en la ruta de la página, lo tira al enrutador respectivo.
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -28,12 +29,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-//   const victor = new User({
-//     username: "Victor",
-//     lastname:"Briones",
-//     password: "victor",
-//   });
-//   victor.save();
   res.status(200).json({
     mensaje: "ruta post",
     detail: "",

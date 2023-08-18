@@ -12,11 +12,11 @@ const UserSchema=new mongoose.Schema({
     },
     password:{
         type: String,
-        require: true,
+        required: true,
     },
     email:{
         type: String,
-        require: true,
+        required: true,
         unique: true,
         index: true,
         validate: {
@@ -27,32 +27,29 @@ const UserSchema=new mongoose.Schema({
     },
     phone:{
         type: Number,
-        require: false,
+        required: false,
     },
     address:{
         type: String,
-        require: false,
+        required: false,
     },
     rol:{
         type: String,
-        require: false,
+        required: false,
     },
     premium:{
         type: Boolean,
-        require: true,
-        default: false
+        required: true,
+        default:false
     },
     dob:{
         type: Date,
-        require: false,
+        required: false,
     },
-
-
 },{
     timestamps:true
 })
 
 const User=mongoose.model('User',UserSchema)
-
 
 module.exports=User

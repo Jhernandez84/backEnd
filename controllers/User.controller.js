@@ -1,12 +1,12 @@
-const mongoose=require('mongoose')
+const mongoose= require('mongoose')
 const generateToken = require('../helpers/generateToken')
 const hashPassword = require('../helpers/hashPassword')
 
 const User=mongoose.model('User')
 
 const signup= async (req,res)=>{
-    const{username,email,password}=req.body
-    const emailLowerCase=email.toLowerCase()
+    const{username,email,password, premium}=req.body
+    const emailLowerCase = email.toLowerCase()
     const regexPassword=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
     if(!regexPassword.test(password)){
@@ -15,18 +15,19 @@ const signup= async (req,res)=>{
         })
     }
     const hashedPassword=hashPassword(password)
+
     try {
         const user= new User({
             username,
             email:emailLowerCase,
-            password:hashedPassword
+            password:hashedPassword,
+            premium,
         })
         const resp=await user.save()
         const token=generateToken(resp)
         return res.status(201).json({
             message: 'User created',
             token
-
         })
     } catch (error) {
         return res.status(500).json({
@@ -50,6 +51,7 @@ const getUsers= async(req,res)=>{
          })
     }
 }
+
 const updateUser=async (req,res)=>{
     const{_id,userUpdated}=req.body
     console.log(_id,userUpdated)
@@ -82,7 +84,6 @@ const deleteUser=async (req,res)=>{
         })
     }
 }
-
 const login=async(req,res)=>{
     const{email,password}=req.body
     const emailLowerCase=email.toLowerCase()
@@ -116,7 +117,6 @@ const login=async(req,res)=>{
         })
     }
 }
-
 const getUserById=async(req,res)=>{
     const{_id}=req.params
     try {
@@ -130,7 +130,6 @@ const getUserById=async(req,res)=>{
         return res.status(404).json({
             message:'Not found'
         })
-        
     } catch (error) {
         return res.status(500).json({
             message:'Server Error',
